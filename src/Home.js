@@ -23,7 +23,7 @@ function Home(props) {
       })
     }
     createPokemonObject(data.results)
-    await console.log(allPokemons)
+    // await console.log(allPokemons)
     }
 
     useEffect(() => {

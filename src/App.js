@@ -1,31 +1,18 @@
 import React from 'react';
 import Search from './search';
-import { Route,Routes } from 'react-router-dom';
+import { Route,Routes,Link } from 'react-router-dom';
 import Home from './Home';
-import { fetchPokemon } from './getPokemon';
-import Pokemon from './Pokemoncard';
-
 
 const App = () => {
-  
-  console.log("I am called")
-  const getPokemon = async (query) => {
-    // console.log(query);
-    const response = await fetchPokemon(query)
-    // console.log(response)
-    const results = await response.json()
-    console.log(results)
-  }
-
 
   return (
     <div className="container">
       <div className='header'>
-        <span><a href="/">Pokédex</a></span>
-        <p><a href="explore">Explore</a></p> 
+        <span><Link to="/">Pokédex</Link></span>
+        <p><Link to="/explore">Explore</Link></p> 
       </div>
       <Routes>
-        <Route path='/explore' element={<Search getPokemon={getPokemon} />} />
+        <Route path='/explore' element={<Search />}/>
         <Route path='/' element={<Home />} />
       </Routes>
       

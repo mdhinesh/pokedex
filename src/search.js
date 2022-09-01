@@ -1,25 +1,43 @@
 import React from 'react';
-// import { useState} from 'react';
-// import { fetchPokemon } from './getPokemon';
+import { useState} from 'react';
+import { fetchPokemon } from './getPokemon';
+import Pokemon from './Pokemoncard';
 
-export default function Search(props){
+
+export default function Search(){
 
     const [search, setSearch] = React.useState('');
-    // console.log(search);
-    
+
+    const [pokemon, setpokemon] = useState();
+    const [loading, setloading] = useState(false);
+
+    const getPokemon = async (query) => {
+        const response = await fetchPokemon(query);
+        const results = await response.json();
+        setpokemon(results);
+        setloading(false);
+    }
 
     return (
     <div className="search-container">
-        <h1>{search}</h1>
-        <form>
         <center>
-            <i onClick={(e) => props.getPokemon(search)} class="fa-solid fa-magnifying-glass"></i>
+            <i onClick ={(e) => getPokemon(search)} class="fa-solid fa-magnifying-glass"></i> 
             <input 
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Enter Pokemon Name..." size="60" id="searchbox" type="text" />
-            {/* <button onClick={(e) => props.getPokemon(search)}>search</button> */}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Enter Pokemon Name..." 
+                size="60" 
+                id="searchbox" 
+                type="text" 
+            />
         </center>
-        </form>
+        {!loading && pokemon ? (
+            <Pokemon
+              id={pokemon.id}
+              image={pokemon.sprites.other.dream_world.front_default}
+              name={pokemon.name}
+              type={pokemon.types[0].type.name}
+            />
+          ): null}
         </div>
     )
 }
